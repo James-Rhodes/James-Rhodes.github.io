@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLE Testing</title>
+</head>
+
+<body onload="javascript:init()">
+    <h1>I am trying to transmit data through BLE!!</h1>
+    <button id="connect">Connect</button>
+    <p id="disp">This will have the value!!</p>
+    <input type="range" min="10" max="2000" value="1000" id="dataRateSlider" />
+    <h2 id="dataRate">The data rate will be written here</h2>
+    <div style="text-align:center; display:flex;
+    flex-direction:row; justify-content: center; align-items: center;">
+        <canvas id="Chart" style="width:50%; height:auto;"></canvas>
+    </div>
+    <hr>
+    <input type="text" id="input">
+    <button id="send">Send data</button>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="BLE.js"></script>
+</body>
+
+</html>
