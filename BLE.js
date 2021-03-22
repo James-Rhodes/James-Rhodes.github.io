@@ -25,7 +25,8 @@ button.addEventListener('click', function () {
                 handleCharacteristicValueChanged);
             console.log('Notifications have been started.');
         })
-        .catch(error => { console.error(error); });
+        .catch(error => { console.error(error);
+                        gyro.innerText = "An error occured during connection";});
 
 
 
@@ -36,13 +37,14 @@ button.addEventListener('click', function () {
         //console.log(value);
         angles.innerText = 'angles: '+'yaw: '+ value.yaw + ', ' +'pitch: '+ value.pitch +', ' + 'roll: ' + value.roll;
         acc.innerText = 'acceleration: '+'x: '+ value.acc_x + ', ' +'y: '+ value.acc_y +', ' + 'z: ' + value.acc_z;
-        gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
-
+        //gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
+        gyro.innerText = "Made it inside the value pass function!";
         value = parseFloat(value.pitch);
         //console.log(value.pitch);
         let today = new Date();
         let t = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         addData(t, value);
+        gyro.innerText = "Made it passed the add Data function!";
         // TODO: Parse Heart Rate Measurement value.
         // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
     }
