@@ -33,13 +33,13 @@ button.addEventListener('click', function () {
         // const value = event.target.value.getUint8(0);
         let value = dec.decode(event.target.value);
         value = JSON.parse(value);
-        console.log(value);
+        //console.log(value);
         angles.innerText = 'angles: '+'yaw: '+ value.yaw + ', ' +'pitch: '+ value.pitch +', ' + 'roll: ' + value.roll;
         acc.innerText = 'acceleration: '+'x: '+ value.acc_x + ', ' +'y: '+ value.acc_y +', ' + 'z: ' + value.acc_z;
         gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
 
         value = parseFloat(value.pitch);
-        console.log(value.pitch);
+        //console.log(value.pitch);
         let today = new Date();
         let t = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         addData(t, value);
@@ -56,6 +56,7 @@ function init() {
             datasets: [{
                 label: 'Pitch',
                 data: [],
+                pointRadius: 0,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
