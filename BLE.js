@@ -32,13 +32,14 @@ button.addEventListener('click', function () {
 
     function handleCharacteristicValueChanged(event) {
         // const value = event.target.value.getUint8(0);
+        gyro.innerText = "Made it inside the value pass function!";
         let value = dec.decode(event.target.value);
         value = JSON.parse(value);
         //console.log(value);
         angles.innerText = 'angles: '+'yaw: '+ value.yaw + ', ' +'pitch: '+ value.pitch +', ' + 'roll: ' + value.roll;
         acc.innerText = 'acceleration: '+'x: '+ value.acc_x + ', ' +'y: '+ value.acc_y +', ' + 'z: ' + value.acc_z;
         //gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
-        gyro.innerText = "Made it inside the value pass function!";
+        
         value = parseFloat(value.pitch);
         //console.log(value.pitch);
         let today = new Date();
@@ -51,6 +52,7 @@ button.addEventListener('click', function () {
 });
 
 function init() {
+    gyro.innerText = "Initialising...";
     myChart = new Chart(ctx, {
         type: 'line',
         data: {
