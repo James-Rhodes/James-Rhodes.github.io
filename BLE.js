@@ -24,6 +24,7 @@ button.addEventListener('click', function () {
             characteristic.addEventListener('characteristicvaluechanged',
                 handleCharacteristicValueChanged);
             console.log('Notifications have been started.');
+        gyro.innerText = "Connected Successfully!";
         })
         .catch(error => { console.error(error);
                         gyro.innerText = "An error occured during connection";});
