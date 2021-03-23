@@ -8,6 +8,7 @@ const maxDataPts = 200;
 let gyro = document.querySelector("#gyro");
 let acc = document.querySelector("#acc");
 let angles = document.querySelector("#angles");
+let debug = document.querySelector("#debug");
 
 
 
@@ -24,6 +25,7 @@ button.addEventListener('click', function () {
             characteristic.addEventListener('characteristicvaluechanged',
                 handleCharacteristicValueChanged);
             console.log('Notifications have been started.');
+            debug.innerText = "Notifications have been started!";
         })
         .catch(error => { console.error(error); });
 
@@ -34,9 +36,9 @@ button.addEventListener('click', function () {
         let value = dec.decode(event.target.value);
         value = JSON.parse(value);
        // console.log(value);
-        angles.innerText = 'angles: '+'yaw: '+ value.yaw + ', ' +'pitch: '+ value.pitch +', ' + 'roll: ' + value.roll;
-        acc.innerText = 'acceleration: '+'x: '+ value.acc_x + ', ' +'y: '+ value.acc_y +', ' + 'z: ' + value.acc_z;
-        gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
+        angles.innerText = `angles: yaw: ${value.yaw}, pitch: ${value.pitch}, roll: ${value.roll}`;
+        acc.innerText = `acceleration: x: ${value.acc_x}, y: ${value.acc_y}, z: ${value.acc_z}`;
+        gyro.innerText = `gyroscope: x: ${value.gyro_x}, y: ${value.gyro_y}, z: ${value.gyro_z}`;
 
         value = parseFloat(value.pitch);
        // console.log(value.pitch);
