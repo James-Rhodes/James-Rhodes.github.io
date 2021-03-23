@@ -8,7 +8,7 @@ const maxDataPts = 200;
 let gyro = document.querySelector("#gyro");
 let acc = document.querySelector("#acc");
 let angles = document.querySelector("#angles");
-
+let debug = document.querySelector("#debug");
 
 
 button.addEventListener('click', function () {
@@ -18,42 +18,43 @@ button.addEventListener('click', function () {
         .then(device => device.gatt.connect())
         .then(server => server.getPrimaryService('heart_rate'))
         .then(service => service.getCharacteristic('battery_level'))
-        .then(characteristic => characteristic.startNotifications())
+        .then(characteristic => {characteristic.startNotifications();
+                                debug.innerText = "1";})
         .then(characteristic => {
             writeChar = characteristic;
             characteristic.addEventListener('characteristicvaluechanged',
                 handleCharacteristicValueChanged);
             console.log('Notifications have been started.');
-        gyro.innerText = "Connected Successfully!";
+        debug.innerText = "2";
         })
         .catch(error => { console.error(error);
-                        gyro.innerText = "An error occured during connection";});
+                        debug.innerText = "An error occured during connection";});
 
 
 
     function handleCharacteristicValueChanged(event) {
         // const value = event.target.value.getUint8(0);
-        gyro.innerText = "Made it inside the value pass function!";
+        debug.innerText = "Made it inside the value pass function!";
         let value = dec.decode(event.target.value);
         value = JSON.parse(value);
         //console.log(value);
         angles.innerText = 'angles: '+'yaw: '+ value.yaw + ', ' +'pitch: '+ value.pitch +', ' + 'roll: ' + value.roll;
         acc.innerText = 'acceleration: '+'x: '+ value.acc_x + ', ' +'y: '+ value.acc_y +', ' + 'z: ' + value.acc_z;
-        //gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
+        gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
         
         value = parseFloat(value.pitch);
         //console.log(value.pitch);
         let today = new Date();
         let t = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         addData(t, value);
-        gyro.innerText = "Made it passed the add Data function!";
+        debug.innerText = "Made it passed the add Data function!";
         // TODO: Parse Heart Rate Measurement value.
         // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
     }
 });
 
 function init() {
-    gyro.innerText = "Initialising...";
+    debug.innerText = "Initialising...";
     myChart = new Chart(ctx, {
         type: 'line',
         data: {
