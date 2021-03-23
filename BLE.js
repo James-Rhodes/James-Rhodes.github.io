@@ -1,20 +1,14 @@
 let button = document.querySelector("#connect")
-let disp = document.querySelector("#disp");
-let send = document.querySelector("#send");
-let slider = document.querySelector("#dataRateSlider");
-let dataRateDisplay = document.querySelector("#dataRate");
 let writeChar;
 let enc = new TextEncoder();
 let dec = new TextDecoder();
-let input = document.querySelector("#input");
 let myChart;
 const ctx = document.getElementById('Chart');
 const maxDataPts = 200;
+let gyro = document.querySelector("#gyro");
+let acc = document.querySelector("#acc");
+let angles = document.querySelector("#angles");
 
-send.addEventListener('click', () => {
-    writeChar.writeValue(enc.encode(input.value));
-    input.value = "";
-})
 
 
 button.addEventListener('click', function () {
@@ -38,10 +32,14 @@ button.addEventListener('click', function () {
     function handleCharacteristicValueChanged(event) {
         // const value = event.target.value.getUint8(0);
         let value = dec.decode(event.target.value);
+        value = JSON.parse(value);
+       // console.log(value);
+        angles.innerText = 'angles: '+'yaw: '+ value.yaw + ', ' +'pitch: '+ value.pitch +', ' + 'roll: ' + value.roll;
+        acc.innerText = 'acceleration: '+'x: '+ value.acc_x + ', ' +'y: '+ value.acc_y +', ' + 'z: ' + value.acc_z;
+        gyro.innerText = 'gyroscope: '+'x: '+ value.gyro_x + ', ' +'y: '+ value.gyro_y +', ' + 'z: ' + value.gyro_z;
 
-        disp.innerText = 'Received ' + value;
-        value = parseFloat(value);
-        console.log(value);
+        value = parseFloat(value.pitch);
+       // console.log(value.pitch);
         let today = new Date();
         let t = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + ":" + today.getMilliseconds();
         addData(t, value);
@@ -56,8 +54,9 @@ function init() {
         data: {
             labels: [],
             datasets: [{
-                label: 'Random Number',
+                label: 'Pitch',
                 data: [],
+                pointRadius: 0,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -106,15 +105,8 @@ function removeData(label, data) {
     myChart.data.datasets[0].data.shift(data);
 }
 
-slider.addEventListener('input', () => {
-    dataRateDisplay.innerText = "The data Rate is: " + slider.value + "ms";
-})
-slider.addEventListener('change', () => {
-    writeChar.writeValue(enc.encode('#' + slider.value));
 
-})
 
-slider.addEventListener('input', () => {
-    dataRateDisplay.innerText = "The data Rate is: " + slider.value + "ms";
-})
+
+
 
